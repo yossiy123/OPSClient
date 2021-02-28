@@ -12,25 +12,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //List<Project> projects = new List<Project>();
-    //projects.add(
-    //  new Project(
-    //      id: 1,
-    //      name: "Important project",
-    //      description: "Very important project"),
-    //);
-    //projects.add(
-    //  new Project(
-    //      id: 2,
-    //      name: "Interesting project",
-    //      description: "Very interesting project"),
-    //);
-    //projects.add(
-    //  new Project(id: 3, name: "Bad project", description: "Very bad project"),
-    //);
-
-    //List<Project> projects =
-
     return Scaffold(
         body: FutureBuilder(
       future: this.getProjects(),
@@ -57,17 +38,6 @@ class HomePage extends StatelessWidget {
         return widget;
       },
     ));
-
-    //ListView.builder(
-    //    itemCount: projects.length,
-    //    itemBuilder: (BuildContext context, int index) {
-    //      return ListTile(
-    //        title: Text(projects[index].name),
-    //        leading: Text(projects[index].id.toString()),
-    //        subtitle: Text(projects[index].description),
-    //      );
-    //    },
-    //  ),
   }
 
   Future<List<Project>> getProjects() async {
