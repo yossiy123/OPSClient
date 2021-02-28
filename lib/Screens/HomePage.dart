@@ -8,7 +8,7 @@ import 'package:ospclient/Models/Project.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
-  final String _url = 'osprojects.eu-gb.mybluemix.net';
+  final String _url = 'https://osprojects.eu-gb.mybluemix.net/';
 
   @override
   Widget build(BuildContext context) {
@@ -71,19 +71,20 @@ class HomePage extends StatelessWidget {
   }
 
   Future<List<Project>> getProjects() async {
-    print("AA");
-    //var response = await http.get(this._url + "project/all");
-    var response = await http.get(Uri.https(this._url, 'project/all'));
-    print("AA");
     List<Project> result;
-    print("AA");
+    var response = await http.get(this._url + 'project/all');
     if (response.statusCode == 200) {
-      print("FFFF");
-      result = convert.jsonDecode(response.body);
+      var json = convert.jsonDecode(response.body);
+      if (json['success'] == true) {
+        result = (json['data'] as List)
+            .map((projectJson) => Project.fromJson(projectJson))
+            .toList();
+      } else {
+        print(json['message']); // Change to error message
+      }
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
-
     return result;
   }
 }
