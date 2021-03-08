@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:convert' as convert;
-
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:ospclient/Models/Project.dart';
 import 'package:ospclient/Services/ProjectService.dart';
 
@@ -15,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String _url = 'https://osprojects.eu-gb.mybluemix.net/';
+  //final String _url = 'https://osprojects.eu-gb.mybluemix.net/';
   //Future<List<Project>> _future;
   ProjectService _projectService;
   // final StreamController<List<Project>> _controller =
@@ -28,12 +24,10 @@ class _HomePageState extends State<HomePage> {
     _projectService = new ProjectService();
     _projectService.getNotAsyncProjects();
     //_controller.sink.add(_projectService.projects);
-    //_controller.add(event)
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _projectService.dispose();
     //_controller.close();
@@ -105,32 +99,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<List<Project>> getProjects() async {
-    List<Project> result;
-    var response = await http.get(this._url + 'project/all');
-    if (response.statusCode == 200) {
-      var json = convert.jsonDecode(response.body);
-      if (json['success'] == true) {
-        result = (json['data'] as List)
-            .map((projectJson) => Project.fromJson(projectJson))
-            .toList();
-      } else {
-        print(json['message']); // Change to error message
-      }
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
-    return result;
-  }
-
-  List<Project> getR() {
-    List<Project> a = [
-      Project(id: 0, name: "asdasd", description: "wawag"),
-      Project(id: 1, name: "aa", description: "bbb"),
-    ];
-    print(a);
-    return a;
-  }
+  // Future<List<Project>> getProjects() async {
+  //   List<Project> result;
+  //   var response = await http.get(this._url + 'project/all');
+  //   if (response.statusCode == 200) {
+  //     var json = convert.jsonDecode(response.body);
+  //     if (json['success'] == true) {
+  //       result = (json['data'] as List)
+  //           .map((projectJson) => Project.fromJson(projectJson))
+  //           .toList();
+  //     } else {
+  //       print(json['message']); // Change to error message
+  //     }
+  //   } else {
+  //     print('Request failed with status: ${response.statusCode}.');
+  //   }
+  //   return result;
 }
 
 /* PROVIDER (FUTURE PROVIDER?)
