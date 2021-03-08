@@ -23,7 +23,7 @@ class ProjectService {
 
   Future<List<Project>> getProjects() async {
     List<Project> result;
-    var response = await http.get(this._url + 'project/all');
+    var response = await http.get(Uri.parse(this._url + 'project/all'));
     if (response.statusCode == 200) {
       var json = convert.jsonDecode(response.body);
       if (json['success'] == true) {
