@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ospclient/Models/Project.dart';
 import 'package:ospclient/Services/ProjectService.dart';
+import 'package:ospclient/Widgets/searchWidget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -37,84 +38,104 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final widthScreen = MediaQuery.of(context).size.width * 0.15;
     AppBar myAppBar = AppBar(
-      title: Text("Open Source Projects"),
+      backgroundColor: Colors.teal,
+      title: SearchTitle(),
       leading: Icon(Icons.work),
-      actions: [
-        IconButton(
-            icon: const Icon(Icons.add_box_outlined),
-            tooltip: 'Add OpenSourceProject',
-            onPressed: () {}),
-        IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'find OpenSourceProject',
-            onPressed: () {}),
-      ],
     );
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: myAppBar.preferredSize,
-        child: Container(
-            padding: EdgeInsets.symmetric(horizontal: widthScreen),
-            child: myAppBar),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widthScreen),
-        child: StreamBuilder(
-          stream: _projectService.controller.stream,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Project>> snapshot) {
-            Widget widget;
-            if (!snapshot.hasData) {
-              widget = Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.lightBlueAccent,
-                ),
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.done ||
-                snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasError) {
-                widget = Text("error");
-              } else if (snapshot.hasData) {
-                widget = ListView.separated(
-                  itemCount: snapshot.data.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(
-                    color: Colors.black54,
+        appBar: PreferredSize(
+          preferredSize: myAppBar.preferredSize,
+          child: Container(
+              padding: EdgeInsets.symmetric(horizontal: widthScreen),
+              child: myAppBar),
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: widthScreen, vertical: 10),
+          child: StreamBuilder(
+            stream: _projectService.controller.stream,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Project>> snapshot) {
+              Widget widget;
+              if (!snapshot.hasData) {
+                widget = Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.lightBlueAccent,
                   ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(snapshot.data[index].name),
-                      leading: Text(snapshot.data[index].id.toString()),
-                      subtitle: Text(snapshot.data[index].description),
-                    );
-                  },
                 );
               }
-            }
-            return widget;
-          },
+              if (snapshot.connectionState == ConnectionState.done ||
+                  snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasError) {
+                  widget = Text("error");
+                } else if (snapshot.hasData) {
+                  widget = ListView.separated(
+                    itemCount: snapshot.data.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
+                      color: Colors.black54,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProjectCard(
+                          name: snapshot.data[index].name,
+                          id: snapshot.data[index].id.toString(),
+                          description: snapshot.data[index].description);
+                    },
+                  );
+                }
+              }
+              return widget;
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.teal,
+          onPressed: () {},
+          tooltip: "Add Your Project",
+          child: Icon(Icons.add_box_outlined),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
+  }
+}
+
+class ProjectCard extends StatelessWidget {
+  final String name;
+  final String id;
+  final String description;
+  const ProjectCard({
+    Key key,
+    this.name,
+    this.id,
+    this.description,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0.5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      color: Colors.lightBlue[50],
+      child: ListTile(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        title: Text(
+          this.name,
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        onTap: () {},
+        hoverColor: Colors.lightGreenAccent[100],
+        leading: CircleAvatar(
+          backgroundColor: Colors.lightBlue[100],
+          child: Text(this.id, style: TextStyle(color: Colors.black)),
+        ),
+        subtitle: Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: Text(this.description,
+              style: TextStyle(color: Colors.black, fontSize: 16)),
         ),
       ),
     );
   }
-
-  // Future<List<Project>> getProjects() async {
-  //   List<Project> result;
-  //   var response = await http.get(this._url + 'project/all');
-  //   if (response.statusCode == 200) {
-  //     var json = convert.jsonDecode(response.body);
-  //     if (json['success'] == true) {
-  //       result = (json['data'] as List)
-  //           .map((projectJson) => Project.fromJson(projectJson))
-  //           .toList();
-  //     } else {
-  //       print(json['message']); // Change to error message
-  //     }
-  //   } else {
-  //     print('Request failed with status: ${response.statusCode}.');
-  //   }
-  //   return result;
 }
 
 /* PROVIDER (FUTURE PROVIDER?)
