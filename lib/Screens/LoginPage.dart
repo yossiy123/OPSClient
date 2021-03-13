@@ -40,6 +40,13 @@ class LoginPage extends StatelessWidget {
               MaterialButton(
                 onPressed: () {},
                 child: Text(
+                  "Login",
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+              MaterialButton(
+                onPressed: () {},
+                child: Text(
                   "Forgot your password?",
                   style: TextStyle(color: Colors.blue),
                 ),
