@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ospclient/Dialogs/AddProjectDialog.dart';
 
 import 'package:ospclient/Models/Project.dart';
 import 'package:ospclient/Screens/LoginPage.dart';
@@ -16,19 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   //final String _url = 'https://osprojects.eu-gb.mybluemix.net/';
-  //Future<List<Project>> _future;
 
   ProjectService _projectService;
-  // final StreamController<List<Project>> _controller =
-  //     StreamController<List<Project>>();
 
   @override
   void initState() {
     super.initState();
-    //_future = this.getProjects();
+
     _projectService = new ProjectService();
     _projectService.getNotAsyncProjects();
-    //_controller.sink.add(_projectService.projects);
   }
 
   @override
@@ -114,11 +111,21 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.teal,
-          onPressed: () {},
+          onPressed: () {
+            addProjectShowDialog(context);
+          },
           tooltip: "Add Your Project",
           child: Icon(Icons.add_box_outlined),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
+  }
+
+  Future addProjectShowDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AddProjectDialog();
+        });
   }
 }
 
