@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ospclient/Screens/LoginPage.dart';
+import 'package:ospclient/Screens/RegisterPage.dart';
 
 import 'Screens/HomePage.dart';
 
@@ -11,11 +13,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      initialRoute: HomePage.route,
+      routes: {
+        HomePage.route: (context) => HomePage(),
+        LoginPage.route: (context) => LoginPage(),
+        RegisterPage.route: (context) => RegisterPage()
+      },
+      title: 'Open Source Projects',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      //home: HomePage(),
     );
   }
 }

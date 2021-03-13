@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:ospclient/Models/Project.dart';
+import 'package:ospclient/Screens/LoginPage.dart';
+import 'package:ospclient/Screens/RegisterPage.dart';
 import 'package:ospclient/Services/ProjectService.dart';
 import 'package:ospclient/Widgets/searchWidget.dart';
 
 class HomePage extends StatefulWidget {
+  static const String route = '/';
   const HomePage({Key key}) : super(key: key);
 
   @override
@@ -14,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //final String _url = 'https://osprojects.eu-gb.mybluemix.net/';
   //Future<List<Project>> _future;
+
   ProjectService _projectService;
   // final StreamController<List<Project>> _controller =
   //     StreamController<List<Project>>();
@@ -41,6 +45,27 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.teal,
       title: SearchTitle(),
       leading: Icon(Icons.work),
+      actions: [
+        MaterialButton(
+          onPressed: () {
+            Navigator.pushNamed(context, LoginPage.route);
+          },
+          child: Text(
+            "Login",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        SizedBox(),
+        MaterialButton(
+          onPressed: () {
+            Navigator.pushNamed(context, RegisterPage.route);
+          },
+          child: Text(
+            "Register",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
     );
     return Scaffold(
         appBar: PreferredSize(
