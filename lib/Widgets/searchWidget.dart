@@ -1,18 +1,25 @@
 import 'dart:ui';
 import 'package:focus_widget/focus_widget.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ospclient/Services/ProjectService.dart';
 
 class SearchTitle extends StatefulWidget {
+  final ProjectService projectService;
+
+  SearchTitle({this.projectService});
+
   @override
-  _SearchTitleState createState() => _SearchTitleState();
+  _SearchTitleState createState() => _SearchTitleState(projectService);
 }
 
 class _SearchTitleState extends State<SearchTitle> {
   String searchInput = "";
   //var _controller = TextEditingController();
   final FocusNode myFocusNode = FocusNode();
+  final ProjectService projectService;
+
+  _SearchTitleState(this.projectService);
 
   @override
   void initState() {
@@ -42,7 +49,7 @@ class _SearchTitleState extends State<SearchTitle> {
       maxLines: 1,
       style: TextStyle(color: Colors.black),
       onChanged: (value) {
-        searchInput = value;
+        projectService.searchProjects(value);
       },
       mouseCursor: MaterialStateMouseCursor.clickable,
       cursorColor: Colors.black,
@@ -64,7 +71,7 @@ class _SearchTitleState extends State<SearchTitle> {
             onPressed: () {},
           ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.all(18)),
+          contentPadding: EdgeInsets.all(4)),
     );
   }
 }

@@ -7,6 +7,7 @@ import 'dart:convert' as convert;
 class ProjectService {
   final String _url = 'https://osprojects.eu-gb.mybluemix.net/';
   List<Project> projects;
+  List<Project> mainList;
   final StreamController<List<Project>> _controller =
       StreamController<List<Project>>();
 
@@ -14,6 +15,21 @@ class ProjectService {
 
   void getNotAsyncProjects() async {
     projects = await getProjects();
+    mainList = projects.toList();
+    _controller.sink.add(projects);
+  }
+
+  void searchProjects(String nameSearch) {
+    if (nameSearch.isEmpty) {
+      projects = mainList.toList();
+    }
+    nameSearch = nameSearch.toLowerCase();
+    if (projects.isNotEmpty) projects.clear();
+    mainList.forEach((project) {
+      if (project.name.toLowerCase().contains(nameSearch)) {
+        projects.add(project);
+      }
+    });
     _controller.sink.add(projects);
   }
 

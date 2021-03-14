@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
     final widthScreen = MediaQuery.of(context).size.width * 0.15;
     AppBar myAppBar = AppBar(
       backgroundColor: Colors.teal,
-      title: SearchTitle(),
+      title: SearchTitle(
+        projectService: _projectService,
+      ),
       leading: Icon(Icons.work),
       actions: [
         MaterialButton(
