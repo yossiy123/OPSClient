@@ -5,7 +5,7 @@ import 'package:ospclient/Models/Project.dart';
 import 'package:ospclient/Screens/LoginPage.dart';
 import 'package:ospclient/Screens/RegisterPage.dart';
 import 'package:ospclient/Services/ProjectService.dart';
-import 'package:ospclient/Widgets/searchWidget.dart';
+import 'package:ospclient/Widgets/SearchWidget.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = '/';

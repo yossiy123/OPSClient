@@ -1,10 +1,11 @@
 ########UI#######
 title widget onclick become search input - done
-design login/register/addproject
+design login/register - done
+design addproject
 filter results
 design page, and modify the class and models
 ########LOGIC#######
 database with login/register
 update ui login/register logic (https get/set)
-create search logic
+create search logic - done
 create filter results logic

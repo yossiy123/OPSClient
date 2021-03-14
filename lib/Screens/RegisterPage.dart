@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:focus_widget/focus_widget.dart';
-import 'package:ospclient/Widgets/textFieldCustomWidget.dart';
+import 'package:ospclient/Widgets/TextFieldCustomWidget.dart';
+import 'package:ospclient/Widgets/ContainerCustomLR.dart';
+
 //  Navigator.pop(context);
 
 class RegisterPage extends StatelessWidget {
@@ -14,67 +16,60 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.30,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FocusWidget(
+        backgroundColor: Colors.teal,
+        body: CustomContainerLR(
+          childrens: [
+            FocusWidget(
+              focusNode: emailFocusNode,
+              child: FieldCustomWidget(
                 focusNode: emailFocusNode,
-                child: FieldCustomWidget(
-                  focusNode: emailFocusNode,
-                  hintText: "Type Email",
-                  labelText: "Email",
-                ),
+                hintText: "Type Email",
+                labelText: "Email",
               ),
-              FocusWidget(
+            ),
+            FocusWidget(
+              focusNode: userFocusNode,
+              child: FieldCustomWidget(
                 focusNode: userFocusNode,
-                child: FieldCustomWidget(
-                  focusNode: userFocusNode,
-                  hintText: "Type UserName",
-                  labelText: "User",
-                ),
+                hintText: "Type UserName",
+                labelText: "User",
               ),
-              FocusWidget(
+            ),
+            FocusWidget(
+              focusNode: passwordFocusNode,
+              child: FieldCustomWidget(
                 focusNode: passwordFocusNode,
-                child: FieldCustomWidget(
-                  focusNode: passwordFocusNode,
-                  secureText: true,
-                  hintText: "Type Password",
-                  labelText: "Password",
-                ),
+                secureText: true,
+                hintText: "Type Password",
+                labelText: "Password",
               ),
-              FocusWidget(
+            ),
+            FocusWidget(
+              focusNode: rePasswordFocusNode,
+              child: FieldCustomWidget(
                 focusNode: rePasswordFocusNode,
-                child: FieldCustomWidget(
-                  focusNode: rePasswordFocusNode,
-                  secureText: false,
-                  hintText: "Retype Password",
-                  labelText: "Password",
-                ),
+                secureText: true,
+                hintText: "Retype Password",
+                labelText: "Password",
               ),
-              MaterialButton(
-                onPressed: () {},
-                child: Text(
-                  "Register",
-                  style: TextStyle(color: Colors.blue),
-                ),
+            ),
+            MaterialButton(
+              onPressed: () {},
+              child: Text(
+                "Register",
+                style: TextStyle(color: Colors.blue),
               ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "Back To Main Page",
-                  style: TextStyle(color: Colors.blue),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Back To Main Page",
+                style: TextStyle(color: Colors.blue),
+              ),
+            )
+          ],
+        ));
   }
 }
